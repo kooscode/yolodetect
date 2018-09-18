@@ -59,10 +59,6 @@ int main(int argc, char** argv)
 
     //load names.
      std::vector<std::string> names_list = read_names(net_names);
-     for (int i = 0; i < names_list.size(); i++)
-     {
-         std::cout << i << " " << names_list.at(i) << std::endl;
-     }
      
     //detection area bounding box color
     cv::Scalar obj_box_color = cv::Scalar(0x00, 0xff, 0x00);
@@ -118,17 +114,18 @@ int main(int argc, char** argv)
             
             cv::imshow("cam", src1);
         }
-        if (cv::waitKey(30) >= 0)
+        
+        //33ms = roughly 30 fps
+        int x = cv::waitKey(33);
+        
+        //ESC exits
+        if(x == 27) //ESC = 27
         {
-#ifdef __linux__ 
-            imwrite("/home/koos/Desktop/inrange.jpg", src1);
-#elif __APPLE__
-            imwrite("/Users/kdupreez/Desktop/inrange.jpg");
-#else 
-            cout << "NO IMAGE SAVED.." << endl;
-#endif
-            
-            break;
+            break;       
+        }
+        else if (x == 112) //s = save
+        {
+            cv::imwrite("outfile.jpg", src1);
         }
     }
     
