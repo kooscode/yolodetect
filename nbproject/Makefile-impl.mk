@@ -31,7 +31,7 @@ DEFAULTCONF=Debug_OSX
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug_OSX Release Debug_Linux 
+ALLCONFS=Debug_OSX Release Debug_Linux Debug_Jetson 
 
 
 # build
