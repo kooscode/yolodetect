@@ -52,13 +52,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=/home/nvidia/ml/darknet/darknet.so `pkg-config --libs opencv`  
+LDLIBSOPTIONS=/home/koos/ml/darknet/darknet.so `pkg-config --libs opencv`  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: /home/nvidia/ml/darknet/darknet.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: /home/koos/ml/darknet/darknet.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
