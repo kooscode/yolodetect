@@ -8,3 +8,5 @@ Dependencies:
 - opencv_contrib : Requires some OpenCV extras https://github.com/opencv/opencv_contrib
 - darknet : clone and build (for CUDA, CUDNN, OPENCV) from https://github.com/AlexeyAB/darknet 
 
+* Pre-trained models for yolo can be downloaded from: https://pjreddie.com/media/files/yolov3-spp.weights
+
