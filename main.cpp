@@ -24,6 +24,35 @@ bool fexists(const std::string& filename)
   return (bool)ifile;
 }
 
+//generete next log file name in numbered sequence
+std::string generate_filename(std::string file_name, std::string file_ext)
+{
+    int file_seq = 1;
+    int max_tries = 1000;
+    std::string default_file = file_name + "." + file_ext;
+    std::string tmp_file = default_file;
+    
+    do 
+    {
+        std::stringstream strstrm;
+        strstrm << file_name << "_" << file_seq << "." << file_ext;
+        tmp_file = strstrm.str();
+        
+        file_seq++;
+        max_tries --;
+
+        //max file sequence generation reached, use default and overwrite.
+        if (max_tries <= 0)
+        {
+            tmp_file = default_file;
+            break;
+        }
+        
+    } while (fexists(tmp_file));
+    
+    return tmp_file;
+}
+
 std::vector<std::string> read_names(std::string txtfilepath)
 {
     std::vector<std::string> names_list;
@@ -48,12 +77,12 @@ std::vector<std::string> read_names(std::string txtfilepath)
 int main(int argc, char** argv) 
 {
     //Neural network settings
-    float net_confidence = 0.10f;
+    float net_confidence = 0.01f;
     float net_threshold = 0.20f;
     std::string net_config = "/home/koos/ml/darknet/cfg/yolov3-spp.cfg";
     std::string net_weights = "/home/koos/ml/darknet/weights/yolov3-spp.weights";
     std::string net_names = "/home/koos/ml/darknet/data/coco.names";
- 
+
     //Create Darknet Detector
     Detector darknet(net_config, net_weights);
 
@@ -65,11 +94,15 @@ int main(int argc, char** argv)
 
     //opencv image
     cv::Mat src1;
-    
+
     //capture video stream from cam 0 at specific camera res.. 
-    cv::VideoCapture stream1(0); //0 is the id of video device.0 if you have only one camera.
-    stream1.set(3,1280); // resolution X
-    stream1.set(4,960); //resolution Y
+    cv::VideoCapture stream1(1); //0 is the id of video device.0 if you have only one camera.
+//    stream1.set(3,1920); // resolution X
+//    stream1.set(4,1080); //resolution Y
+//    stream1.set(3,1280); // resolution X
+//    stream1.set(4,960); //resolution Y
+    stream1.set(3,1920); // resolution X
+    stream1.set(4,1080); //resolution Y
     
     //make sure video stream is open/active
     if (!stream1.isOpened())
@@ -95,8 +128,8 @@ int main(int argc, char** argv)
             //check objects location relative to areas of interrest..
             for (auto obj_box : bboxes)
             {
-                //only mark higher than 30% probability
-                if (obj_box.prob > 0.15)
+                //only mark higher than specified confidence
+                if (obj_box.prob > net_confidence)
                 {
                     cv::Point obj_box_tl = cv::Point(obj_box.x, obj_box.y);
                     cv::Point obj_box_br = cv::Point(obj_box.x + obj_box.w, obj_box.y + obj_box.h);
@@ -104,7 +137,7 @@ int main(int argc, char** argv)
 
                     std::stringstream strstrm;
                     strstrm << names_list.at(obj_box.obj_id) << " " << (int)(obj_box.prob * 100) << "%";
-                    cv::putText(src1, strstrm.str().c_str(), obj_box_tl, cv::FONT_HERSHEY_PLAIN, 2,  obj_box_color, 2);
+                    cv::putText(src1, strstrm.str().c_str(), obj_box_tl, cv:: FONT_HERSHEY_PLAIN, 2,  obj_box_color, 2);
                 }
 
             }
@@ -120,9 +153,11 @@ int main(int argc, char** argv)
         {
             break;       
         }
-        else if (x == 112) //s = save
+        else if (x == 115) //s = save
         {
-            cv::imwrite("outfile.jpg", src1);
+            std::string jpgname = generate_filename("outfile", "jpg");
+            std::cout << "saving: " << jpgname  << std::endl;
+            cv::imwrite(jpgname, src1);
         }
     }
     
