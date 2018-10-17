@@ -79,10 +79,15 @@ int main(int argc, char** argv)
     //Neural network settings
     float net_confidence = 0.01f;
     float net_threshold = 0.20f;
-    std::string net_config = "/home/koos/ml/darknet/cfg/yolov3-spp.cfg";
-    std::string net_weights = "/home/koos/ml/darknet/weights/yolov3-spp.weights";
+    
+    std::string net_config = "/media/koos/data/ml/training/yolotrain-spongebob/cfg/yolov3-tiny_xnor.cfg";
+    std::string net_weights = "/media/koos/data/ml/training/yolotrain-spongebob/weights/yolov3-tiny_xnor_500000.weights";
     std::string net_names = "/home/koos/ml/darknet/data/coco.names";
 
+//    std::string net_config = "/home/koos/ml/darknet/cfg/yolov3-spp.cfg";
+//    std::string net_weights = "/home/koos/ml/darknet/weights/yolov3-spp.weights";
+//    std::string net_names = "/home/koos/ml/darknet/data/coco.names";
+    
     //Create Darknet Detector
     Detector darknet(net_config, net_weights);
 
@@ -96,7 +101,7 @@ int main(int argc, char** argv)
     cv::Mat src1;
 
     //capture video stream from cam 0 at specific camera res.. 
-    cv::VideoCapture stream1(1); //0 is the id of video device.0 if you have only one camera.
+    cv::VideoCapture stream1(0); //0 is the id of video device.0 if you have only one camera.
 //    stream1.set(3,1920); // resolution X
 //    stream1.set(4,1080); //resolution Y
 //    stream1.set(3,1280); // resolution X
@@ -123,7 +128,7 @@ int main(int argc, char** argv)
         else
         {
             //detect objects using yolo detector & return vector of bounding boxes!
-            std::vector<bbox_t> bboxes = darknet.detect(src1, net_threshold, true);
+            std::vector<bbox_t> bboxes = darknet.detect(src1, net_threshold, false);
             
             //check objects location relative to areas of interrest..
             for (auto obj_box : bboxes)
