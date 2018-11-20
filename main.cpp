@@ -15,7 +15,7 @@
 //compiled for SO/Lib and OPENCV using GPU(Cuda/CuDNN) and GPU Tracking.
 #define OPENCV
 //#define GPU
-#include <darknet/src/yolo_v2_class.hpp>
+#include "/data/sources/darknet/src/yolo_v2_class.hpp"
 
 //check if file exists..
 bool fexists(const std::string& filename) 
@@ -79,9 +79,9 @@ int main(int argc, char** argv)
     //Neural network settings
     float net_confidence = 0.01f;
     float net_threshold = 0.20f;
-    std::string net_config = "/home/koos/ml/darknet/cfg/yolov3-spp.cfg";
-    std::string net_weights = "/home/koos/ml/darknet/weights/yolov3-spp.weights";
-    std::string net_names = "/home/koos/ml/darknet/data/coco.names";
+    std::string net_config = "/data/ml/production/platforms/darknet/proximal-idaho/cfg/net-yolov2-voc.cfg";
+    std::string net_weights = "/data/ml/production/platforms/darknet/proximal-idaho/weights/net-yolov2-voc-train_93900.weights";
+    std::string net_names = "/data/ml/production/platforms/darknet/proximal-idaho/cfg/classes.names";
 
     //Create Darknet Detector
     Detector darknet(net_config, net_weights);
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     cv::Mat src1;
 
     //capture video stream from cam 0 at specific camera res.. 
-    cv::VideoCapture stream1(1); //0 is the id of video device.0 if you have only one camera.
+    cv::VideoCapture stream1(0); //0 is the id of video device.0 if you have only one camera.
 //    stream1.set(3,1920); // resolution X
 //    stream1.set(4,1080); //resolution Y
 //    stream1.set(3,1280); // resolution X

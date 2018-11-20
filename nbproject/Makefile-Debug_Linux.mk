@@ -52,13 +52,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=/home/koos/ml/darknet/darknet.so `pkg-config --libs opencv`  
+LDLIBSOPTIONS=/usr/local/lib/darknet.so `pkg-config --libs opencv`  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: /home/koos/ml/darknet/darknet.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: /usr/local/lib/darknet.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -67,7 +67,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: ${OBJECTFILES}
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/home/koos/ml `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I/data/sources `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
