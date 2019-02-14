@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream>
 
-
 //OPENCV
  #include <opencv2/core/utility.hpp>
  #include <opencv2/tracking.hpp>
@@ -15,7 +14,7 @@
 //compiled for SO/Lib and OPENCV using GPU(Cuda/CuDNN) and GPU Tracking.
 #define OPENCV
 //#define GPU
-#include <darknet/src/yolo_v2_class.hpp>
+#include <darknet/include/yolo_v2_class.hpp>
 
 //check if file exists..
 bool fexists(const std::string& filename) 
@@ -76,17 +75,27 @@ std::vector<std::string> read_names(std::string txtfilepath)
 
 int main(int argc, char** argv) 
 {
-    //Neural network settings
-    float net_confidence = 0.01f;
-    float net_threshold = 0.20f;
+    int camindex = 0;
     
-    std::string net_config = "/media/koos/data/ml/training/yolotrain-spongebob/cfg/yolov3-tiny_xnor.cfg";
-    std::string net_weights = "/media/koos/data/ml/training/yolotrain-spongebob/weights/yolov3-tiny_xnor_500000.weights";
-    std::string net_names = "/home/koos/ml/darknet/data/coco.names";
+    if (argc > 1)
+        camindex = std::stoi(argv[1]);
+        
+    //Neural network settings
+    float net_confidence = 0.10f;
+    float net_threshold = 0.10f;
+    
+//    //net definition
+//    std::string net_config = "/data/ml/production/platforms/darknet/proximal-idaho/cfg/net-yolov2-voc.cfg";
+//    std::string net_weights = "/data/ml/production/platforms/darknet/proximal-idaho/weights/net-yolov2-voc-proximal-idaho.weights";
+//    std::string net_names = "/data/ml/production/platforms/darknet/izzy/cfg/classes.names";
 
-//    std::string net_config = "/home/koos/ml/darknet/cfg/yolov3-spp.cfg";
-//    std::string net_weights = "/home/koos/ml/darknet/weights/yolov3-spp.weights";
-//    std::string net_names = "/home/koos/ml/darknet/data/coco.names";
+//    std::string net_config = "/data/ml/production/platforms/darknet/izzy/cfg/net-yolov2-voc-train.cfg";
+//    std::string net_weights = "/data/ml/production/platforms/darknet/izzy/weights/net-yolov2-voc-train_final.weights";
+//    std::string net_names = "/data/ml/production/platforms/darknet/izzy/cfg/classes.names";
+    
+    std::string net_config = "/data/ml/train/proximal-idaho-paddles-544x288/cfg/yolov2.cfg";
+    std::string net_names = "/data/ml/train/proximal-idaho-paddles-544x288/cfg/classes.names";
+    std::string net_weights = "/data/ml/train/proximal-idaho-paddles-544x288/weights/yolov2_final.weights";
     
     //Create Darknet Detector
     Detector darknet(net_config, net_weights);
@@ -97,17 +106,22 @@ int main(int argc, char** argv)
     //detection area bounding box color
     cv::Scalar obj_box_color = cv::Scalar(0x00, 0xff, 0x00);
 
+    
     //opencv image
     cv::Mat src1;
 
     //capture video stream from cam 0 at specific camera res.. 
-    cv::VideoCapture stream1(0); //0 is the id of video device.0 if you have only one camera.
+//    cv::VideoCapture stream1(camindex); //0 is the id of video device.0 if you have only one camera.
 //    stream1.set(3,1920); // resolution X
 //    stream1.set(4,1080); //resolution Y
 //    stream1.set(3,1280); // resolution X
 //    stream1.set(4,960); //resolution Y
-    stream1.set(3,1920); // resolution X
-    stream1.set(4,1080); //resolution Y
+//    stream1.set(3,1920); // resolution X
+//    stream1.set(4,1080); //resolution Y
+  
+cv::VideoCapture stream1("/home/koos/Downloads/paddles2.mp4");
+//cv::VideoCapture stream1("/home/koos/Downloads/idaho_shop2.mp4");
+    
     
     //make sure video stream is open/active
     if (!stream1.isOpened())
@@ -128,6 +142,17 @@ int main(int argc, char** argv)
         else
         {
             //detect objects using yolo detector & return vector of bounding boxes!
+            //threshold const = 0.2f
+//            cv::rotate(src1, src1, cv::ROTATE_180);
+//            cv::resize(src1, src1,  cv::Size(640, 480));
+            
+          cv::rotate(src1, src1, cv::ROTATE_180);
+            
+            //cv::Mat tg;
+            //cv::cvtColor(src1, tg, cv::COLOR_BGR2GRAY);
+            //cv::cvtColor(tg, src1, cv::COLOR_GRAY2BGR);
+
+            
             std::vector<bbox_t> bboxes = darknet.detect(src1, net_threshold, false);
             
             //check objects location relative to areas of interrest..
@@ -136,6 +161,7 @@ int main(int argc, char** argv)
                 //only mark higher than specified confidence
                 if (obj_box.prob > net_confidence)
                 {
+                   // std::cout << "x:" << obj_box.x << ", y:" << obj_box.y << std::endl << std::flush;
                     cv::Point obj_box_tl = cv::Point(obj_box.x, obj_box.y);
                     cv::Point obj_box_br = cv::Point(obj_box.x + obj_box.w, obj_box.y + obj_box.h);
                     cv::rectangle(src1, obj_box_tl, obj_box_br, obj_box_color, 2, 8, 0 );
@@ -151,7 +177,7 @@ int main(int argc, char** argv)
         }
         
         //33ms = roughly 30 fps
-        int x = cv::waitKey(33);
+        int x = cv::waitKey(1);
         
         //ESC exits
         if(x == 27) //ESC = 27

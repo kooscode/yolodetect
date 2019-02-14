@@ -132,14 +132,14 @@
         <ccTool>
           <standard>8</standard>
           <incDir>
-            <pElem>/home/koos/ml</pElem>
+            <pElem>/data/sources</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
           <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
-            <linkerLibFileItem>/home/koos/ml/darknet/darknet.so</linkerLibFileItem>
             <linkerOptionItem>`pkg-config --libs opencv`</linkerOptionItem>
+            <linkerLibLibItem>darknet</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
