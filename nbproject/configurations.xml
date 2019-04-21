@@ -82,7 +82,7 @@
           <developmentMode>5</developmentMode>
           <standard>8</standard>
           <incDir>
-            <pElem>/home/koos/ml/darknet/src</pElem>
+            <pElem>/data/sources/darknet/src</pElem>
           </incDir>
         </ccTool>
         <fortranCompilerTool>
@@ -93,7 +93,7 @@
         </asmTool>
         <linkerTool>
           <linkerAddLib>
-            <pElem>/home/koos/ml/darknet</pElem>
+            <pElem>/data/sources/darknet</pElem>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <linkerDynSerch>
@@ -101,7 +101,7 @@
             <pElem>.</pElem>
           </linkerDynSerch>
           <linkerLibItems>
-            <linkerLibFileItem>/home/koos/ml/darknet/darknet.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/lib/darknet.so</linkerLibFileItem>
             <linkerLibLibItem>opencv_core</linkerLibLibItem>
             <linkerLibLibItem>opencv_highgui</linkerLibLibItem>
             <linkerLibLibItem>opencv_imgcodecs</linkerLibLibItem>
@@ -170,7 +170,7 @@
         <linkerTool>
           <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
-            <linkerLibFileItem>/home/nvidia/ml/darknet/darknet.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/local/lib/darknet.so</linkerLibFileItem>
             <linkerOptionItem>`pkg-config --libs opencv`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
