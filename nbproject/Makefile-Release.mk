@@ -52,13 +52,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/home/koos/ml/darknet -L/usr/local/lib -Wl,-rpath,'.' -Wl,-rpath,'.' /home/koos/ml/darknet/darknet.so -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_video -lopencv_videoio
+LDLIBSOPTIONS=-L/data/sources/darknet -L/usr/local/lib -Wl,-rpath,'.' -Wl,-rpath,'.' /usr/local/lib/darknet.so -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_video -lopencv_videoio
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: /home/koos/ml/darknet/darknet.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: /usr/local/lib/darknet.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -67,7 +67,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: ${OBJECTFILES}
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I/home/koos/ml/darknet/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -I/data/sources/darknet/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

@@ -52,21 +52,12 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-<<<<<<< HEAD
 LDLIBSOPTIONS=`pkg-config --libs opencv` -ldarknet  
-=======
-LDLIBSOPTIONS=/usr/local/lib/darknet.so `pkg-config --libs opencv`  
->>>>>>> 187ea7798082bbaddb0a5600731190b9615714f6
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect
 
-<<<<<<< HEAD
-=======
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: /usr/local/lib/darknet.so
-
->>>>>>> 187ea7798082bbaddb0a5600731190b9615714f6
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	g++ -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/yolodetect ${OBJECTFILES} ${LDLIBSOPTIONS}

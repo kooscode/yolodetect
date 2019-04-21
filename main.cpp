@@ -13,12 +13,8 @@
 //YOLO V3 INCLUDES - https://github.com/AlexeyAB/darknet
 //compiled for SO/Lib and OPENCV using GPU(Cuda/CuDNN) and GPU Tracking.
 #define OPENCV
-//#define GPU
-<<<<<<< HEAD
-#include <darknet/include/yolo_v2_class.hpp>
-=======
-#include "/data/sources/darknet/src/yolo_v2_class.hpp"
->>>>>>> 187ea7798082bbaddb0a5600731190b9615714f6
+#define GPU
+#include "/data/sources/darknet/include/yolo_v2_class.hpp"
 
 //check if file exists..
 bool fexists(const std::string& filename) 
@@ -106,13 +102,8 @@ int main(int argc, char** argv)
     //opencv image
     cv::Mat src1;
 
-<<<<<<< HEAD
     //capture stream from cam at specific camera res.. 
 //    cv::VideoCapture stream1(camindex); //0 is the id of video device.0 if you have only one camera.
-=======
-    //capture video stream from cam 0 at specific camera res.. 
-    cv::VideoCapture stream1(0); //0 is the id of video device.0 if you have only one camera.
->>>>>>> 187ea7798082bbaddb0a5600731190b9615714f6
 //    stream1.set(3,1920); // resolution X
 //    stream1.set(4,1080); //resolution Y
 //    stream1.set(3,1280); // resolution X
