@@ -38,6 +38,14 @@ CND_ARTIFACT_PATH_Debug_Jetson=dist/Debug_Jetson/GNU-Linux/yolodetect
 CND_PACKAGE_DIR_Debug_Jetson=dist/Debug_Jetson/GNU-Linux/package
 CND_PACKAGE_NAME_Debug_Jetson=yolodetect.tar
 CND_PACKAGE_PATH_Debug_Jetson=dist/Debug_Jetson/GNU-Linux/package/yolodetect.tar
+# Debug_Nano configuration
+CND_PLATFORM_Debug_Nano=GNU-Linux
+CND_ARTIFACT_DIR_Debug_Nano=dist/Debug_Nano/GNU-Linux
+CND_ARTIFACT_NAME_Debug_Nano=yolodetect
+CND_ARTIFACT_PATH_Debug_Nano=dist/Debug_Nano/GNU-Linux/yolodetect
+CND_PACKAGE_DIR_Debug_Nano=dist/Debug_Nano/GNU-Linux/package
+CND_PACKAGE_NAME_Debug_Nano=yolodetect.tar
+CND_PACKAGE_PATH_Debug_Nano=dist/Debug_Nano/GNU-Linux/package/yolodetect.tar
 #
 # include compiler specific variables
 #

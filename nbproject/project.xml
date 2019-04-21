@@ -27,6 +27,10 @@
                     <name>Debug_Jetson</name>
                     <type>1</type>
                 </confElem>
+                <confElem>
+                    <name>Debug_Nano</name>
+                    <type>1</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>

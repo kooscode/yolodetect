@@ -81,18 +81,10 @@ int main(int argc, char** argv)
         camindex = std::stoi(argv[1]);
         
     //Neural network settings
-    float net_confidence = 0.10f;
-    float net_threshold = 0.10f;
+    float net_threshold = 0.20f;
+    float net_confidence = 0.40f;
     
 //    //net definition
-//    std::string net_config = "/data/ml/production/platforms/darknet/proximal-idaho/cfg/net-yolov2-voc.cfg";
-//    std::string net_weights = "/data/ml/production/platforms/darknet/proximal-idaho/weights/net-yolov2-voc-proximal-idaho.weights";
-//    std::string net_names = "/data/ml/production/platforms/darknet/izzy/cfg/classes.names";
-
-//    std::string net_config = "/data/ml/production/platforms/darknet/izzy/cfg/net-yolov2-voc-train.cfg";
-//    std::string net_weights = "/data/ml/production/platforms/darknet/izzy/weights/net-yolov2-voc-train_final.weights";
-//    std::string net_names = "/data/ml/production/platforms/darknet/izzy/cfg/classes.names";
-    
     std::string net_config = "/data/ml/train/proximal-idaho-paddles-544x288/cfg/yolov2.cfg";
     std::string net_names = "/data/ml/train/proximal-idaho-paddles-544x288/cfg/classes.names";
     std::string net_weights = "/data/ml/train/proximal-idaho-paddles-544x288/weights/yolov2_final.weights";
@@ -110,7 +102,7 @@ int main(int argc, char** argv)
     //opencv image
     cv::Mat src1;
 
-    //capture video stream from cam 0 at specific camera res.. 
+    //capture stream from cam at specific camera res.. 
 //    cv::VideoCapture stream1(camindex); //0 is the id of video device.0 if you have only one camera.
 //    stream1.set(3,1920); // resolution X
 //    stream1.set(4,1080); //resolution Y
@@ -119,9 +111,9 @@ int main(int argc, char** argv)
 //    stream1.set(3,1920); // resolution X
 //    stream1.set(4,1080); //resolution Y
   
-cv::VideoCapture stream1("/home/koos/Downloads/paddles2.mp4");
-//cv::VideoCapture stream1("/home/koos/Downloads/idaho_shop2.mp4");
-    
+    //capture stream from file.
+    cv::VideoCapture stream1("/home/koos/Downloads/rocks_idaho.mp4");
+
     
     //make sure video stream is open/active
     if (!stream1.isOpened())
@@ -146,7 +138,7 @@ cv::VideoCapture stream1("/home/koos/Downloads/paddles2.mp4");
 //            cv::rotate(src1, src1, cv::ROTATE_180);
 //            cv::resize(src1, src1,  cv::Size(640, 480));
             
-          cv::rotate(src1, src1, cv::ROTATE_180);
+         // cv::rotate(src1, src1, cv::ROTATE_180);
             
             //cv::Mat tg;
             //cv::cvtColor(src1, tg, cv::COLOR_BGR2GRAY);
@@ -159,7 +151,7 @@ cv::VideoCapture stream1("/home/koos/Downloads/paddles2.mp4");
             for (auto obj_box : bboxes)
             {
                 //only mark higher than specified confidence
-                if (obj_box.prob > net_confidence)
+                if(obj_box.prob > net_confidence) // && (obj_box.obj_id == 1.) 
                 {
                    // std::cout << "x:" << obj_box.x << ", y:" << obj_box.y << std::endl << std::flush;
                     cv::Point obj_box_tl = cv::Point(obj_box.x, obj_box.y);
@@ -177,7 +169,7 @@ cv::VideoCapture stream1("/home/koos/Downloads/paddles2.mp4");
         }
         
         //33ms = roughly 30 fps
-        int x = cv::waitKey(1);
+        int x = cv::waitKey(20);
         
         //ESC exits
         if(x == 27) //ESC = 27
